@@ -1,0 +1,30 @@
+name: Run Pytest
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  run_pytest:
+    name: Run pytest
+    runs-on: ubuntu-latest # Linux OS 
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Setup conda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: swe4s
+          environment-file: environment.yaml
+      - name: Conda info
+        run: |
+          conda info
+          conda list
+      - name: Run pytest
+        run: pytest
+
